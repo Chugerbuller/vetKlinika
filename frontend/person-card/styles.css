@@ -1,0 +1,86 @@
+body{
+    background:#f5f7fb;
+    font-family:system-ui;
+}
+
+.container-box{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.back-btn{
+    margin-bottom:20px;
+}
+
+.person-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #eee;
+    margin-bottom:30px;
+}
+
+.person-name{
+    font-size:22px;
+    font-weight:600;
+}
+
+.person-meta{
+    margin-top:8px;
+    color:#6c757d;
+}
+
+.animals-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.animals-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.animal-card{
+    background:white;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #eee;
+    cursor:pointer;
+    transition:0.2s;
+}
+.animal-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+.animal-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.3);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hidden{
+    display:none;
+}
+
+.animal-window{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+}

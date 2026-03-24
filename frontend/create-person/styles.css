@@ -1,0 +1,27 @@
+body{
+    background:#f5f7fb;
+    font-family:system-ui;
+}
+
+.container-box{
+    max-width:500px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.title{
+    margin-bottom:25px;
+    font-weight:600;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.buttons{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+}
