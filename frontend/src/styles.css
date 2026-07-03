@@ -1,0 +1,66 @@
+body{
+    background:#f5f7fb;
+    font-family: system-ui;
+}
+
+.app-container{
+    max-width:800px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.header{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.title{
+    font-weight:600;
+}
+
+.add-btn{
+    border-radius:10px;
+}
+
+.search{
+    padding:12px;
+    border-radius:10px;
+}
+
+.clients-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.client-card{
+    background:white;
+    border-radius:12px;
+    padding:16px;
+    cursor:pointer;
+    transition:0.2s;
+    border:1px solid #eee;
+}
+
+.client-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.client-name{
+    font-size:18px;
+    font-weight:600;
+}
+
+.client-meta{
+    color:#6c757d;
+    font-size:14px;
+}

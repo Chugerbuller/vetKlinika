@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Карточка питомца</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="page">
+        <!-- НОВОЕ: Кнопка возврата к владельцу -->
+        <div class="mb-4">
+            <button id="backToOwnerBtn" class="btn btn-outline-secondary">
+                &larr; Вернуться к владельцу
+            </button>
+        </div>
+
+        <div class="top-section">
+            <div id="petCard" class="pet-card"></div>
+
+            <div class="right-section">
+                <div class="allergy-block">
+                    <!-- НОВОЕ: Заголовок с кнопкой "Изменить" -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0">Аллергии</h6>
+                        <button id="editAllergyBtn" class="btn btn-sm btn-outline-danger">Изменить</button>
+                    </div>
+
+                    <!-- Контейнер для списка -->
+                    <div id="allergyList"></div>
+
+                    <!-- НОВОЕ: Форма редактирования (скрыта по умолчанию) -->
+                    <div id="allergyEditContainer" class="hidden">
+                        <textarea id="allergyInput" class="form-control mb-2" rows="3"
+                            placeholder="Введите аллергии с новой строки"></textarea>
+                        <div class="d-flex gap-2">
+                            <button id="saveAllergyBtn" class="btn btn-sm btn-success">Сохранить</button>
+                            <button id="cancelAllergyBtn" class="btn btn-sm btn-secondary">Отмена</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="visits-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Приемы</h4>
+                <button id="addVisitBtn" class="add-card-btn">
+                    Добавить прием
+                </button>
+            </div>
+
+            <div id="visitsList" class="visits-list"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно (остается без изменений) -->
+    <div id="visitModal" class="modal hidden">
+        <div class="modal-window">
+            <h5>Прием</h5>
+            <div id="visitContent"></div>
+            <button id="closeVisitModal" class="btn btn-secondary mt-3">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="pet.js"></script>
+</body>
+
+</html>

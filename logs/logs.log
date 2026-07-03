@@ -1,0 +1,125 @@
+{"level":"info","msg":"Логгер инициализирован","time":"2026-04-02T20:33:21+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:27+05:00"}
+{"count":1,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:27+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:27+05:00"}
+{"count":1,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:27+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:33:28+05:00"}
+{"handler":"handleGetPersonById","id":1,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:33:28+05:00"}
+{"count":2,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":1,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:33:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:33:28+05:00"}
+{"count":4,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:33:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:55268","time":"2026-04-02T20:33:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:65273","time":"2026-04-02T20:33:28+05:00"}
+{"handler":"handleGetPetById","id":1,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:55268","time":"2026-04-02T20:33:28+05:00"}
+{"count":3,"handler":"handleGetAppointmentsByPetId","level":"info","method":"GET","msg":"Successfully fetched appointments for pet","path":"/api/appointments","pet_id":"1","remote":"[::1]:65273","time":"2026-04-02T20:33:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:33:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:55268","time":"2026-04-02T20:33:29+05:00"}
+{"handler":"handleGetAppointmentById","level":"info","method":"GET","msg":"Successfully fetched appointment","path":"/api/appointments","query_id":"1","remote":"[::1]:55268","time":"2026-04-02T20:33:29+05:00"}
+{"handler":"handleGetPetById","id":1,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:33:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:29+05:00"}
+{"count":1,"handler":"HandleGetDocumentsByAppointment","level":"info","method":"GET","msg":"Documents retrieved successfully","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:29+05:00"}
+{"level":"info","method":"DELETE","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"docId":1,"handler":"HandleDeleteDocument","level":"info","method":"DELETE","msg":"Document deleted successfully","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"handler":"handleGetAppointmentById","level":"info","method":"GET","msg":"Successfully fetched appointment","path":"/api/appointments","query_id":"1","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"appointmentId":1,"handler":"HandleGetDocumentsByAppointment","level":"info","method":"GET","msg":"No documents found for appointment","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:33+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:51+05:00"}
+{"docId":2,"handler":"HandleCreateDocument","level":"info","method":"POST","msg":"Document created successfully","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:52+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:55268","time":"2026-04-02T20:33:52+05:00"}
+{"handler":"handleGetAppointmentById","level":"info","method":"GET","msg":"Successfully fetched appointment","path":"/api/appointments","query_id":"1","remote":"[::1]:55268","time":"2026-04-02T20:33:52+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:52+05:00"}
+{"count":1,"handler":"HandleGetDocumentsByAppointment","level":"info","method":"GET","msg":"Documents retrieved successfully","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:52+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:53+05:00"}
+{"docId":2,"handler":"HandleGetDocument","level":"info","method":"GET","msg":"Document retrieved successfully","path":"/api/documents","remote":"[::1]:55268","time":"2026-04-02T20:33:53+05:00"}
+{"level":"info","method":"PUT","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:55268","time":"2026-04-02T20:34:05+05:00"}
+{"handler":"handleUpdatePet","id":1,"level":"info","method":"PUT","msg":"Pet updated successfully","path":"/api/pets","remote":"[::1]:55268","time":"2026-04-02T20:34:05+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:06+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:06+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:53828","time":"2026-04-02T20:34:06+05:00"}
+{"handler":"handleGetPersonById","id":1,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:06+05:00"}
+{"count":4,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:53828","time":"2026-04-02T20:34:06+05:00"}
+{"count":2,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":1,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:06+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:07+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:53828","time":"2026-04-02T20:34:07+05:00"}
+{"count":3,"handler":"handleGetAppointmentsByPetId","level":"info","method":"GET","msg":"Successfully fetched appointments for pet","path":"/api/appointments","pet_id":"1","remote":"[::1]:53828","time":"2026-04-02T20:34:07+05:00"}
+{"handler":"handleGetPetById","id":1,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:07+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:53828","time":"2026-04-02T20:34:08+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:08+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:65273","time":"2026-04-02T20:34:08+05:00"}
+{"handler":"handleGetPersonById","id":1,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:65273","time":"2026-04-02T20:34:08+05:00"}
+{"count":4,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:08+05:00"}
+{"count":2,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":1,"path":"/api/pets","remote":"[::1]:53828","time":"2026-04-02T20:34:08+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:08+05:00"}
+{"count":1,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:08+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:28+05:00"}
+{"created_id":2,"handler":"handleCreatePerson","level":"info","method":"POST","msg":"Person created successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:29+05:00"}
+{"handler":"handleGetPersonById","id":2,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:29+05:00"}
+{"count":0,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":2,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:29+05:00"}
+{"count":4,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:29+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:30+05:00"}
+{"count":2,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:30+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:31+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:31+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:53828","time":"2026-04-02T20:34:31+05:00"}
+{"handler":"handleGetPersonById","id":2,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:55268","time":"2026-04-02T20:34:31+05:00"}
+{"count":4,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:53828","time":"2026-04-02T20:34:31+05:00"}
+{"count":0,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":2,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:31+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:65273","time":"2026-04-02T20:34:50+05:00"}
+{"handler":"HandleCreateType","id":5,"level":"info","method":"POST","msg":"Animal type created successfully","name":"Кот","path":"/api/types","remote":"[::1]:65273","time":"2026-04-02T20:34:50+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:50+05:00"}
+{"handler":"handleCreatePet","level":"info","method":"POST","msg":"Pet created successfully","new_pet_id":5,"ownerId":2,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"count":5,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"count":1,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":2,"path":"/api/pets","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"count":5,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:34:51+05:00"}
+{"handler":"handleGetPersonById","id":2,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"count":1,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":2,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"count":0,"handler":"handleGetAppointmentsByPetId","level":"info","method":"GET","msg":"Successfully fetched appointments for pet","path":"/api/appointments","pet_id":"5","remote":"[::1]:53828","time":"2026-04-02T20:34:51+05:00"}
+{"handler":"handleGetPetById","id":5,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:34:51+05:00"}
+{"level":"info","method":"PUT","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:01+05:00"}
+{"handler":"handleUpdatePet","id":5,"level":"info","method":"PUT","msg":"Pet updated successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:01+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:03+05:00"}
+{"handler":"handleGetPetById","id":5,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:03+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:65273","time":"2026-04-02T20:35:27+05:00"}
+{"created_id":4,"handler":"handleCreateAppointment","level":"info","method":"POST","msg":"Appointment successfully created","path":"/api/appointments","remote":"[::1]:65273","time":"2026-04-02T20:35:27+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:53828","time":"2026-04-02T20:35:27+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:27+05:00"}
+{"count":1,"handler":"handleGetAppointmentsByPetId","level":"info","method":"GET","msg":"Successfully fetched appointments for pet","path":"/api/appointments","pet_id":"5","remote":"[::1]:53828","time":"2026-04-02T20:35:27+05:00"}
+{"handler":"handleGetPetById","id":5,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:27+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:53828","time":"2026-04-02T20:35:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:28+05:00"}
+{"handler":"handleGetAppointmentById","level":"info","method":"GET","msg":"Successfully fetched appointment","path":"/api/appointments","query_id":"4","remote":"[::1]:53828","time":"2026-04-02T20:35:28+05:00"}
+{"handler":"handleGetPetById","id":5,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:28+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:28+05:00"}
+{"appointmentId":4,"handler":"HandleGetDocumentsByAppointment","level":"info","method":"GET","msg":"No documents found for appointment","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:28+05:00"}
+{"level":"info","method":"POST","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"docId":3,"handler":"HandleCreateDocument","level":"info","method":"POST","msg":"Document created successfully","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"handler":"handleGetAppointmentById","level":"info","method":"GET","msg":"Successfully fetched appointment","path":"/api/appointments","query_id":"4","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleDocuments","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"count":1,"handler":"HandleGetDocumentsByAppointment","level":"info","method":"GET","msg":"Documents retrieved successfully","path":"/api/documents","remote":"[::1]:65273","time":"2026-04-02T20:35:35+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:37+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleAppointments","path":"/api/appointments","remote":"[::1]:53828","time":"2026-04-02T20:35:37+05:00"}
+{"count":1,"handler":"handleGetAppointmentsByPetId","level":"info","method":"GET","msg":"Successfully fetched appointments for pet","path":"/api/appointments","pet_id":"5","remote":"[::1]:53828","time":"2026-04-02T20:35:37+05:00"}
+{"handler":"handleGetPetById","id":5,"level":"info","method":"GET","msg":"Pet retrieved successfully","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:37+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePets","path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:38+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandleTypes","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:35:38+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:35:38+05:00"}
+{"count":5,"handler":"HandleGetTypes","level":"info","method":"GET","msg":"Types retrieved successfully","path":"/api/types","remote":"[::1]:55268","time":"2026-04-02T20:35:38+05:00"}
+{"count":1,"handler":"handleGetPetsByOwnerId","level":"info","method":"GET","msg":"Pets by owner retrieved successfully","ownerId":2,"path":"/api/pets","remote":"[::1]:65273","time":"2026-04-02T20:35:38+05:00"}
+{"handler":"handleGetPersonById","id":2,"level":"info","method":"GET","msg":"Person retrieved successfully","path":"/api/persons","remote":"[::1]:53828","time":"2026-04-02T20:35:38+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:63647","time":"2026-04-02T20:35:39+05:00"}
+{"count":2,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:63647","time":"2026-04-02T20:35:39+05:00"}
+{"level":"info","method":"GET","msg":"Incoming request to HandlePersons","path":"/api/persons","remote":"[::1]:63647","time":"2026-04-02T20:35:39+05:00"}
+{"count":2,"handler":"handleGetPersons","level":"info","method":"GET","msg":"Persons list retrieved successfully","path":"/api/persons","remote":"[::1]:63647","time":"2026-04-02T20:35:39+05:00"}

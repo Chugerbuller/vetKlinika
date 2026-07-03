@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Новый прием</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="header-bar">
+            <h3>Заполнение приема</h3>
+            <span id="currentDate" class="date-badge"></span>
+        </div>
+        <!-- Инфо о животном (Read-only) -->
+        <div class="pet-summary">
+            <div id="petSummaryContent">Загрузка данных пациента...</div>
+        </div>
+
+        <form id="createVisitForm" class="visit-form">
+            <div class="form-group">
+                <label>Анамнез (жалобы, симптомы)</label>
+                <textarea id="anamnesis" class="form-control" rows="3"
+                    placeholder="Опишите состояние животного..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Диагноз / Заболевание</label>
+                <input id="disease" type="text" class="form-control" placeholder="Например: Острый гастрит">
+            </div>
+
+            <div class="form-group">
+                <label>Назначенное лечение</label>
+                <textarea id="treatment" class="form-control" rows="4"
+                    placeholder="Препараты, дозировки, процедуры..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Рекомендации</label>
+                <textarea id="recommendations" class="form-control" rows="3"
+                    placeholder="Диета, уход, дата следующего визита..."></textarea>
+            </div>
+
+            <div class="buttons-bar">
+                <button type="button" id="cancelBtn" class="btn btn-secondary">Отмена</button>
+                <button type="submit" class="btn btn-primary">Сохранить прием</button>
+            </div>
+        </form>
+    </div>
+    <script src="crete-appointment.js"></script>
+</body>
+
+</html>

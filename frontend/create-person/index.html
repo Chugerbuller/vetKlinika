@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Создать клиента</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container-box">
+
+<h2 class="title">Создание клиента</h2>
+
+<form id="createPersonForm" class="form">
+
+<input
+        id="surname"
+        class="form-control"
+        placeholder="Фамилия"
+        required
+>
+
+<input
+        id="name"
+        class="form-control"
+        placeholder="Имя"
+        required
+>
+
+<input
+        id="patronymic"
+        class="form-control"
+        placeholder="Отчество"
+>
+
+<input
+        id="phone"
+        class="form-control"
+        placeholder="Телефон"
+        required
+>
+
+<input
+        id="address"
+        class="form-control"
+        placeholder="Адрес"
+        required
+>
+
+<div class="buttons">
+
+<button type="submit" class="btn btn-primary">
+Создать клиента
+</button>
+
+<button type="button" id="cancelBtn" class="btn btn-secondary">
+Отмена
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<script src="create-person.js"></script>
+
+</body>
+</html>

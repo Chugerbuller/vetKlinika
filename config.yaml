@@ -1,0 +1,3 @@
+db_path: "./db/storage.db"
+port: 8080
+logger_path: "./logs/logs.log"
