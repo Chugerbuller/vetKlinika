@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"database/sql"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
@@ -52,12 +54,17 @@ func handleGetPersonById(w http.ResponseWriter, r *http.Request) {
 
 	id, err := strconv.Atoi(strId)
 	if err != nil {
-		log.WithError(err).WithField("strId", strId).Error("Failed to parse person ID")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.WithError(err).WithField("strId", strId).Warn("Invalid person ID")
+		http.Error(w, "Invalid person ID", http.StatusBadRequest)
 		return
 	}
 
 	res, err := st.GetPersonById(id)
+	if errors.Is(err, sql.ErrNoRows) {
+		log.WithField("id", id).Info("Person not found")
+		http.Error(w, "Person not found", http.StatusNotFound)
+		return
+	}
 	if err != nil {
 		log.WithError(err).WithField("id", id).Error("Error retrieving person from DB")
 		http.Error(w, "Error retrieving person", http.StatusInternalServerError)

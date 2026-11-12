@@ -32,14 +32,25 @@ func (s *Storage) GetDocumentsByAppointment(appointmentID int) ([]Document, erro
 
 	return documents, nil
 }
-func (s *Storage) GetDocumentByPet(petId int) (Document, error) {
-	query := `SELECT * FROM documents WHERE pet_id = :pet_id`
-	var doc Document
-	err := s.db.QueryRow(query, sql.Named("pet_id", doc.PetId)).Scan(&doc.Id, &doc.PetId, &doc.Date, &doc.AppointmentId, &doc.Name, &doc.Content)
+
+// GetDocumentsByPet возвращает все документы питомца.
+func (s *Storage) GetDocumentsByPet(petId int) ([]Document, error) {
+	query := `SELECT id, pet_id, appointment_id, date, name, content FROM documents WHERE pet_id = :pet_id`
+	rows, err := s.db.Query(query, sql.Named("pet_id", petId))
 	if err != nil {
-		return Document{}, err
+		return nil, err
 	}
-	return doc, nil
+	defer rows.Close()
+
+	var documents []Document
+	for rows.Next() {
+		var doc Document
+		if err := rows.Scan(&doc.Id, &doc.PetId, &doc.AppointmentId, &doc.Date, &doc.Name, &doc.Content); err != nil {
+			return nil, err
+		}
+		documents = append(documents, doc)
+	}
+	return documents, rows.Err()
 }
 func (s *Storage) CreateDocument(doc Document) (int, error) {
 	query := `INSERT INTO documents (pet_id, appointment_id,date, name, content) VALUES (:pet_id, :appointment_id, :date, :name, :content)`

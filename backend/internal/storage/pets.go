@@ -16,6 +16,7 @@ FROM pets_with_types;`
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var pet Pet
 		err = rows.Scan(&pet.Id, &pet.Name, &pet.Weight, &pet.Age, &pet.AgeWriteDate, &pet.Type, &pet.Allergies)
@@ -57,6 +58,7 @@ WHERE pet_name = :name;`
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var pet Pet
 		err = rows.Scan(&pet.Id, &pet.Name, &pet.Weight, &pet.Age, &pet.AgeWriteDate, &pet.Type, &pet.Allergies)
@@ -82,6 +84,7 @@ WHERE type_name = :type;`
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var pet Pet
 		err = rows.Scan(&pet.Id, &pet.Name, &pet.Weight, &pet.Age, &pet.AgeWriteDate, &pet.Type, &pet.Allergies)
@@ -117,17 +120,18 @@ func (s *Storage) GetPetsByOwner(ownerId int) (*[]Pet, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var pet Pet
 		err = rows.Scan(&pet.Id, &pet.Name, &pet.Weight, &pet.Age, &pet.AgeWriteDate, &pet.Type, &pet.Allergies)
 		if err != nil {
 			return nil, err
 		}
-		pets = append(pets, pet)
 		pet.Age, err = service.CalcAge(pet.AgeWriteDate, pet.Age)
 		if err != nil {
 			return nil, err
 		}
+		pets = append(pets, pet)
 	}
 	log.Printf("Pets: %+v", pets)
 	return &pets, nil
@@ -137,56 +141,73 @@ func (s *Storage) GetPetsByOwnerName(ownerName string) (*[]Pet, error) {
 	query := `SELECT
 			p.id,
 			p.name,
+			p.weight,
+			p.age,
+			p.age_write_date,
 			t.type,
+			p.allergies
 		FROM persons person
 		JOIN persons_to_pets ptp ON person.id = ptp.person_id
-		JOIN pets pet ON ptp.pet_id = pet.id
-		LEFT JOIN types t ON pet.type = t.id
+		JOIN pets p ON ptp.pet_id = p.id
+		LEFT JOIN types t ON p.type = t.id
 		WHERE person.name = :ownerName;`
 
 	rows, err := s.db.Query(query, sql.Named("ownerName", ownerName))
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var pet Pet
 		err = rows.Scan(&pet.Id, &pet.Name, &pet.Weight, &pet.Age, &pet.AgeWriteDate, &pet.Type, &pet.Allergies)
 		if err != nil {
 			return nil, err
 		}
-		pets = append(pets, pet)
 		pet.Age, err = service.CalcAge(pet.AgeWriteDate, pet.Age)
 		if err != nil {
 			return nil, err
 		}
+		pets = append(pets, pet)
 	}
 	return &pets, nil
 }
+
+// AddPet создаёт питомца и привязывает его к владельцу в одной транзакции.
+// Возвращает id созданного питомца.
 func (s *Storage) AddPet(pet Pet, personId int) (int, error) {
-	query := `-- Вставляем тип (если его нет)
-			INSERT INTO pets(name, type, weight, age, age_write_date, allergies)
-			VALUES (
-				:name,
-				:type,
-				:weight,
-				:age,
-				:ageWriteDate,
-				:allergies
-			);
-			INSERT INTO persons_to_pets(person_id, pet_id)
-			VALUES (
-				:ownerId,
-				last_insert_rowid()
-			);`
-	res, err := s.db.Exec(query, sql.Named("name", pet.Name), sql.Named("type", pet.Type), sql.Named("weight", pet.Weight), sql.Named("age", pet.Age), sql.Named("ageWriteDate", pet.AgeWriteDate), sql.Named("ownerId", personId), sql.Named("allergies", pet.Allergies))
+	tx, err := s.db.Begin()
 	if err != nil {
 		return 0, err
 	}
-	lastId, err := res.LastInsertId()
+	defer func() { _ = tx.Rollback() }()
+
+	res, err := tx.Exec(`INSERT INTO pets(name, type, weight, age, age_write_date, allergies)
+			VALUES (:name, :type, :weight, :age, :ageWriteDate, :allergies);`,
+		sql.Named("name", pet.Name),
+		sql.Named("type", pet.Type),
+		sql.Named("weight", pet.Weight),
+		sql.Named("age", pet.Age),
+		sql.Named("ageWriteDate", pet.AgeWriteDate),
+		sql.Named("allergies", pet.Allergies))
 	if err != nil {
 		return 0, err
 	}
-	return int(lastId), nil
+	petId, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	_, err = tx.Exec(`INSERT INTO persons_to_pets(person_id, pet_id) VALUES (:ownerId, :petId);`,
+		sql.Named("ownerId", personId),
+		sql.Named("petId", petId))
+	if err != nil {
+		return 0, err
+	}
+
+	if err := tx.Commit(); err != nil {
+		return 0, err
+	}
+	return int(petId), nil
 }
 func (s *Storage) UpdatePet(pet Pet) error {
 	query := `

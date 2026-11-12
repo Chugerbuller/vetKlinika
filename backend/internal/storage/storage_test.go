@@ -256,6 +256,49 @@ func TestPets_AgeIsRecalculatedEverywhere(t *testing.T) {
 	}
 }
 
+func TestPets_AddPetReturnsPetID(t *testing.T) {
+	st := newTestStorage(t)
+	typeID := mustCreateType(t, st, "кошка")
+	today := time.Now().Format(dateLayout)
+	owner := mustAddPerson(t, st, Person{Name: "Анна"})
+
+	for _, name := range []string{"Мурка", "Барсик"} {
+		id := mustAddPet(t, st, Pet{Name: name, AgeWriteDate: today, Type: strconv.Itoa(typeID)}, owner)
+		pet, err := st.GetPetById(id)
+		if err != nil {
+			t.Fatalf("GetPetById(%d) error = %v", id, err)
+		}
+		if pet.Name != name {
+			t.Errorf("AddPet() returned id of %q, want %q", pet.Name, name)
+		}
+	}
+
+	pets, err := st.GetPetsByOwner(owner)
+	if err != nil {
+		t.Fatalf("GetPetsByOwner() error = %v", err)
+	}
+	if len(*pets) != 2 {
+		t.Errorf("GetPetsByOwner() = %d pets, want 2", len(*pets))
+	}
+}
+
+func TestPets_GetPetsByOwnerName(t *testing.T) {
+	st := newTestStorage(t)
+	typeID := mustCreateType(t, st, "собака")
+	owner := mustAddPerson(t, st, Person{Name: "Иван"})
+	twoYearsAgo := time.Now().AddDate(-2, 0, 0).Format(dateLayout)
+	mustAddPet(t, st, Pet{Name: "Шарик", Age: 1, AgeWriteDate: twoYearsAgo, Type: strconv.Itoa(typeID)}, owner)
+
+	// AddPerson хранит имя в нижнем регистре.
+	pets, err := st.GetPetsByOwnerName("иван")
+	if err != nil {
+		t.Fatalf("GetPetsByOwnerName() error = %v", err)
+	}
+	if len(*pets) != 1 || (*pets)[0].Name != "Шарик" || (*pets)[0].Type != "собака" || (*pets)[0].Age != 3 {
+		t.Errorf("GetPetsByOwnerName() = %+v", *pets)
+	}
+}
+
 func TestPets_UpdateAndDelete(t *testing.T) {
 	st := newTestStorage(t)
 	typeID := mustCreateType(t, st, "кошка")
@@ -373,12 +416,12 @@ func TestDocuments(t *testing.T) {
 		t.Errorf("GetDocumentsByAppointment() = %+v", byAppt)
 	}
 
-	byPet, err := st.GetDocumentByPet(petID)
+	byPet, err := st.GetDocumentsByPet(petID)
 	if err != nil {
-		t.Fatalf("GetDocumentByPet(%d) error = %v", petID, err)
+		t.Fatalf("GetDocumentsByPet(%d) error = %v", petID, err)
 	}
-	if byPet.Id != docID {
-		t.Errorf("GetDocumentByPet().Id = %d, want %d", byPet.Id, docID)
+	if len(byPet) != 1 || byPet[0].Id != docID {
+		t.Errorf("GetDocumentsByPet() = %+v, want document %d", byPet, docID)
 	}
 
 	if err := st.DeleteDocument(docID); err != nil {

@@ -130,9 +130,31 @@ func HandleCreateDocument(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleGetDocumentByPet(w http.ResponseWriter, r *http.Request) {
-	// Оставляю пустым, как в оригинале, только лог вызова
 	log := getLogger(r).WithField("handler", "HandleGetDocumentByPet")
-	log.Info("HandleGetDocumentByPet called")
+	s := getStorage(r)
+	if s == nil {
+		log.Error("Storage not available in context")
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	petIdStr := r.URL.Query().Get("petId")
+	petId, err := strconv.Atoi(petIdStr)
+	if err != nil {
+		log.WithError(err).WithField("petIdStr", petIdStr).Warn("Invalid petId query parameter")
+		http.Error(w, "Invalid petId query parameter", http.StatusBadRequest)
+		return
+	}
+	documents, err := s.GetDocumentsByPet(petId)
+	if err != nil {
+		log.WithError(err).WithField("petId", petId).Error("Failed to get documents")
+		http.Error(w, "Failed to get documents", http.StatusInternalServerError)
+		return
+	}
+	if documents == nil {
+		documents = []storage.Document{}
+	}
+	log.WithField("count", len(documents)).Info("Documents retrieved successfully")
+	writeJson(w, documents)
 }
 
 func HandleGetDocumentsByAppointment(w http.ResponseWriter, r *http.Request) {
