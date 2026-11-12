@@ -1,0 +1,20 @@
+# Бинарники
+*.exe
+/vetklinika
+/main
+
+# Локальная БД и логи (папки остаются через .gitkeep)
+db/*
+!db/.gitkeep
+logs/*
+!logs/.gitkeep
+*.db-journal
+
+# Тесты и покрытие
+*.test
+*.out
+coverage.*
+
+# IDE
+.idea/
+.vscode/
