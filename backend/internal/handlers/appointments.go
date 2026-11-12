@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"database/sql"
+	"errors"
 	"net/http"
 	"strconv"
 	"vetklinika/backend/internal/service"
@@ -23,6 +25,8 @@ func HandleAppointments(w http.ResponseWriter, r *http.Request) {
 		}
 	case http.MethodPost:
 		handleCreateAppointment(w, r)
+	case http.MethodPut:
+		handleUpdateAppointment(w, r)
 	default:
 		log.WithField("method", r.Method).Warn("Method not allowed")
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -134,4 +138,33 @@ func handleGetAppointmentsByPetId(w http.ResponseWriter, r *http.Request) {
 
 	log.WithField("count", len(*appointments)).Info("Successfully fetched appointments for pet")
 	writeJson(w, appointments)
+}
+func handleUpdateAppointment(w http.ResponseWriter, r *http.Request) {
+	log := getLogger(r).WithField("handler", "handleGetAppointmentsByPetId")
+	st := getStorage(r)
+
+	if st == nil {
+		log.Error("Storage missing")
+		http.Error(w, "Storage not available", http.StatusInternalServerError)
+		return
+	}
+	var appointment storage.Appointment
+	err := jsonDeserialize(r.Body, &appointment)
+	if err != nil {
+		log.WithError(err).Error("Failed to deserialize appointment body")
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+	err = st.UpdateAppointment(&appointment)
+	if errors.Is(err, sql.ErrNoRows) {
+		log.WithError(err).Error(err.Error())
+		http.Error(w, "appointment not found", http.StatusNotFound)
+		return
+	}
+	if err != nil {
+		log.WithError(err).Error(err.Error())
+		http.Error(w, "Storage problem", http.StatusInternalServerError)
+		return
+	}
+	writeJson(w, struct{}{})
 }

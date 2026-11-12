@@ -1,4 +1,5 @@
-const personCard = document.getElementById("personCard")
+const personInfo = document.getElementById("personInfo")
+const editPersonBtn = document.getElementById("editPersonBtn")
 const animalsList = document.getElementById("animalsList")
 const backBtn = document.getElementById("backBtn")
 const newTypeBlock = document.getElementById("newTypeBlock")
@@ -6,90 +7,7 @@ const params = new URLSearchParams(window.location.search)
 const personId = params.get("id")
 
 
-backBtn.addEventListener("click", () => {
-
-    window.location.href = "/"
-
-})
-
-
-function createPersonCard(person){
-
-    const name = document.createElement("div")
-    name.classList.add("person-name")
-    name.textContent =
-        person.surname + " " +
-        person.name + " " +
-        (person.patronymic || "")
-
-    const phone = document.createElement("div")
-    phone.classList.add("person-meta")
-    phone.textContent = "📞 " + person.phone
-
-    const address = document.createElement("div")
-    address.classList.add("person-meta")
-    address.textContent = "📍 " + person.address
-
-    personCard.appendChild(name)
-    personCard.appendChild(phone)
-    personCard.appendChild(address)
-
-}
-
-
-function createAnimalCard(animal){
-
-    const card = document.createElement("div")
-    card.classList.add("animal-card")
-
-    const name = document.createElement("div")
-    name.textContent = animal.name
-
-    card.appendChild(name)
-
-    return card
-}
-
-
-function renderAnimals(animals){
-
-    animalsList.textContent = ""
-
-    animals.forEach(animal => {
-
-        const card = createAnimalCard(animal)
-
-        animalsList.appendChild(card)
-
-    })
-
-}
-
-
-async function loadPerson(){
-
-    const response =
-        await fetch("http://localhost:8080/api/persons?id=" + personId)
-
-    const person = await response.json()
-
-    createPersonCard(person)
-
-}
-
-
-async function loadAnimals(){
-
-    const response =
-        await fetch(
-            "http://localhost:8080/api/pets?ownerId=" + personId
-        )
-
-    const animals = await response.json()
-
-    renderAnimals(animals)
-
-}
+// ---------- Элементы модалки питомца ----------
 
 const addAnimalBtn = document.getElementById("addAnimalBtn")
 const modal = document.getElementById("animalModal")
@@ -104,6 +22,230 @@ const nameInput = document.getElementById("animalName")
 
 let types = []
 
+
+// ---------- Элементы модалки клиента ----------
+
+let currentPerson = null
+
+const editPersonModal = document.getElementById("editPersonModal")
+const closePersonModalBtn = document.getElementById("closePersonModalBtn")
+const savePersonBtn = document.getElementById("savePersonBtn")
+
+const editSurnameInput = document.getElementById("editSurname")
+const editNameInput = document.getElementById("editName")
+const editPatronymicInput = document.getElementById("editPatronymic")
+const editPhoneInput = document.getElementById("editPhone")
+const editAddressInput = document.getElementById("editAddress")
+
+
+// ---------- Навигация ----------
+
+backBtn.addEventListener("click", () => {
+
+    window.location.href = "/"
+
+})
+
+
+// ---------- Клиент ----------
+
+function createPersonCard(person) {
+
+    personInfo.textContent = ""
+
+    const name = document.createElement("div")
+    name.classList.add("person-name")
+    name.textContent = [person.surname, person.name, person.patronymic]
+        .filter(Boolean)
+        .join(" ")
+
+    const phone = document.createElement("div")
+    phone.classList.add("person-meta")
+    phone.textContent = "📞 " + (person.phone || "не указан")
+
+    const address = document.createElement("div")
+    address.classList.add("person-meta")
+    address.textContent = "📍 " + (person.address || "не указан")
+
+    personInfo.appendChild(name)
+    personInfo.appendChild(phone)
+    personInfo.appendChild(address)
+}
+
+
+async function loadPerson() {
+
+    try {
+        const response = await fetch("/api/persons?id=" + personId)
+
+        if (!response.ok) {
+            throw new Error("Не удалось получить данные о клиенте")
+        }
+
+        currentPerson = await response.json()
+        createPersonCard(currentPerson)
+
+    } catch (error) {
+        console.error(error)
+        personInfo.textContent = "Не удалось загрузить данные клиента"
+    }
+}
+
+
+function openEditPersonModal() {
+
+    if (!currentPerson) return
+
+    editSurnameInput.value = currentPerson.surname || ""
+    editNameInput.value = currentPerson.name || ""
+    editPatronymicInput.value = currentPerson.patronymic || ""
+    editPhoneInput.value = currentPerson.phone || ""
+    editAddressInput.value = currentPerson.address || ""
+
+    editPersonModal.classList.remove("hidden")
+}
+
+
+function closeEditPersonModal() {
+    editPersonModal.classList.add("hidden")
+}
+
+
+async function updatePerson() {
+
+    try {
+        savePersonBtn.disabled = true
+        savePersonBtn.textContent = "Сохранение..."
+
+        const payload = {
+            id: parseInt(personId, 10),
+            name: editNameInput.value.trim(),
+            surname: editSurnameInput.value.trim(),
+            patronymic: editPatronymicInput.value.trim(),
+            phone: editPhoneInput.value.trim(),
+            address: editAddressInput.value.trim()
+        }
+
+        const response = await fetch("/api/persons", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+
+        if (!response.ok) {
+            throw new Error("Ошибка при обновлении клиента")
+        }
+
+        closeEditPersonModal()
+        await loadPerson()
+
+    } catch (error) {
+        console.error("Ошибка:", error)
+        alert("Произошла ошибка: " + error.message)
+    } finally {
+        savePersonBtn.disabled = false
+        savePersonBtn.textContent = "Сохранить"
+    }
+}
+
+
+editPersonBtn.addEventListener("click", openEditPersonModal)
+closePersonModalBtn.addEventListener("click", closeEditPersonModal)
+savePersonBtn.addEventListener("click", updatePerson)
+
+
+// ---------- Животные ----------
+
+function createAnimalCard(animal) {
+
+    const card = document.createElement("div")
+    card.classList.add("animal-card")
+
+    // Контейнер для текста (чтобы кнопка была сбоку)
+    const infoWrapper = document.createElement("div")
+    infoWrapper.classList.add("animal-info")
+
+    const name = document.createElement("div")
+    name.classList.add("animal-name-label")
+    name.textContent = animal.name
+
+    infoWrapper.appendChild(name)
+
+    // Кнопка удаления
+    const deleteBtn = document.createElement("button")
+    deleteBtn.classList.add("delete-cross")
+    deleteBtn.textContent = "\u00d7"
+    deleteBtn.title = "Удалить"
+
+    deleteBtn.addEventListener("click", (e) => {
+        e.stopPropagation() // Чтобы не сработал переход на страницу животного
+        deleteAnimal(animal.id)
+    })
+
+    card.appendChild(infoWrapper)
+    card.appendChild(deleteBtn)
+
+    // Клик по карточке — переход на страницу животного
+    card.addEventListener("click", () => {
+        window.location.href = "/pets?id=" + animal.id + "&ownerId=" + personId
+    })
+
+    return card
+}
+
+
+function renderAnimals(animals) {
+
+    animalsList.textContent = ""
+
+    animals.forEach(animal => {
+
+        const card = createAnimalCard(animal)
+
+        animalsList.appendChild(card)
+
+    })
+
+}
+
+
+async function loadAnimals() {
+
+    const response = await fetch("/api/pets?ownerId=" + personId)
+
+    const animals = await response.json()
+
+    renderAnimals(animals)
+
+}
+
+
+async function deleteAnimal(animalId) {
+
+    if (!confirm("Вы уверены, что хотите удалить запись о животном?")) {
+        return
+    }
+
+    try {
+        const response = await fetch(`/api/pets?id=${animalId}`, {
+            method: "DELETE"
+        })
+
+        if (!response.ok) {
+            throw new Error("Не удалось удалить животное")
+        }
+
+        // Обновляем список животных после удаления
+        loadAnimals()
+
+    } catch (error) {
+        console.error("Ошибка при удалении:", error)
+        alert("Произошла ошибка при удалении")
+    }
+}
+
+
+// ---------- Модалка питомца ----------
 
 addAnimalBtn.addEventListener("click", () => {
 
@@ -120,7 +262,8 @@ closeBtn.addEventListener("click", () => {
 
 })
 
-function resetAnimalForm(){
+
+function resetAnimalForm() {
 
     nameInput.value = ""
     document.getElementById("animalWeight").value = ""
@@ -133,88 +276,31 @@ function resetAnimalForm(){
     newTypeBlock.classList.add("hidden")
 
 }
+
+
 typeSelect.addEventListener("change", () => {
 
-    if(typeSelect.value === "other"){
+    if (typeSelect.value === "other") {
         newTypeBlock.classList.remove("hidden")
-    }else{
+    } else {
         newTypeBlock.classList.add("hidden")
     }
 
 })
 
-async function deleteAnimal(animalId) {
-    if (!confirm("Вы уверены, что хотите удалить запись о животном?")) {
-        return;
-    }
 
-    try {
-        const response = await fetch(`/api/pets?id=${animalId}`, {
-            method: "DELETE"
-        });
-
-        if (!response.ok) {
-            throw new Error("Не удалось удалить животное");
-        }
-
-        // Обновляем список животных после удаления
-        loadAnimals();
-
-    } catch (error) {
-        console.error("Ошибка при удалении:", error);
-        alert("Произошла ошибка при удалении");
-    }
-}
-
-// Обновленная функция создания карточки (без innerHTML)
-function createAnimalCard(animal) {
-    const card = document.createElement("div");
-    card.classList.add("animal-card");
-
-    // Контейнер для текста (чтобы кнопка была сбоку)
-    const infoWrapper = document.createElement("div");
-    infoWrapper.classList.add("animal-info");
-
-    const name = document.createElement("div");
-    name.classList.add("animal-name-label");
-    name.textContent = animal.name;
-
-    infoWrapper.appendChild(name);
-
-    // Кнопка удаления
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-cross");
-    deleteBtn.textContent = "\u00d7"; // Специальный символ крестика
-    deleteBtn.title = "Удалить";
-
-    // Обработчик удаления
-    deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Чтобы не сработал переход на страницу животного
-        deleteAnimal(animal.id);
-    });
-
-    card.appendChild(infoWrapper);
-    card.appendChild(deleteBtn);
-
-    // Клик по самой карточке для перехода
-    card.addEventListener("click", () => {
-        window.location.href = "/pets?id=" + animal.id + "&ownerId=" + personId;
-    });
-
-    return card;
-}
-async function loadTypes(){
+async function loadTypes() {
 
     typeSelect.textContent = ""
 
-    try{
+    try {
 
         const response = await fetch("/api/types")
         const data = await response.json()
 
         types = data || []
 
-        if(types.length > 0){
+        if (types.length > 0) {
 
             types.forEach(type => {
 
@@ -229,7 +315,7 @@ async function loadTypes(){
 
         }
 
-    }catch(error){
+    } catch (error) {
 
         console.error("Ошибка загрузки типов", error)
 
@@ -240,85 +326,86 @@ async function loadTypes(){
     otherOption.textContent = "Другое"
 
     typeSelect.appendChild(otherOption)
-    if(types.length === 0){
+
+    if (types.length === 0) {
         typeSelect.value = "other"
         newTypeBlock.classList.remove("hidden")
     }
 }
 
+
 async function createAnimal() {
-    const submitButton = saveBtn; // Предположим, у вас есть кнопка
-    
+
+    const submitButton = saveBtn
+
     try {
-        // 1. Блокируем кнопку, чтобы избежать повторных нажатий (Race Condition в UI)
-        submitButton.disabled = true;
-        submitButton.textContent = "Сохранение...";
+        // Блокируем кнопку, чтобы избежать повторных нажатий
+        submitButton.disabled = true
+        submitButton.textContent = "Сохранение..."
 
-        let typeValue = typeSelect.value;
+        let typeValue = typeSelect.value
 
-        // 2. Если выбран "Другой", сначала создаем тип
+        // Если выбран "Другое", сначала создаем тип
         if (typeValue === "other") {
             const newType = {
                 type: newTypeInput.value
-            };
+            }
 
             const typeResponse = await fetch("/api/types", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newType)
-            });
+            })
 
-            // ОБЯЗАТЕЛЬНО проверяем, прошел ли запрос успешно
             if (!typeResponse.ok) {
-                throw new Error("Не удалось создать новый тип животного");
+                throw new Error("Не удалось создать новый тип животного")
             }
 
-            const createdType = await typeResponse.json();
-            
-            // Убедитесь, что поле называется именно .value или .id, как в вашем Go-структе
-            typeValue = createdType.value || createdType.id; 
+            const createdType = await typeResponse.json()
+
+            typeValue = createdType.value || createdType.id
         }
 
-        // 3. Теперь создаем само животное
+        // Создаем само животное
         const pet = {
             name: nameInput.value,
             weight: parseFloat(document.getElementById("animalWeight").value),
             age: parseInt(document.getElementById("animalAge").value),
             age_write_date: new Date().toISOString(),
-            type: parseInt(typeValue, 10), // Используем полученный ID
-        };
+            type: parseInt(typeValue, 10),
+        }
 
         const petResponse = await fetch("/api/pets?ownerId=" + personId, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(pet)
-        });
+        })
 
         if (!petResponse.ok) {
-            throw new Error("Не удалось сохранить данные о животном");
+            throw new Error("Не удалось сохранить данные о животном")
         }
 
-        // 4. Если всё успешно — уходим на страницу карточки или обновляем список
-        window.location.href = "/person?id=" + personId;
+        // Успех: закрываем окно и обновляем данные
+        modal.classList.add("hidden")
+        resetAnimalForm()
+        loadTypes()
+        loadAnimals()
 
     } catch (error) {
-        // Обработка ошибок
-        console.error("Ошибка:", error);
-        alert("Произошла ошибка: " + error.message);
+        console.error("Ошибка:", error)
+        alert("Произошла ошибка: " + error.message)
     } finally {
-        // 5. Разблокируем кнопку в любом случае (если не ушли со страницы)
-        submitButton.disabled = false;
-        submitButton.textContent = "Создать";
+        submitButton.disabled = false
+        submitButton.textContent = "Сохранить запись"
     }
-    modal.classList.add("hidden")
-    resetAnimalForm()
-    loadTypes()
-    loadAnimals()
 }
+
 
 saveBtn.addEventListener("click", createAnimal)
 
+
+// ---------- Старт ----------
+
 loadPerson()
 loadAnimals()
-
 loadTypes()

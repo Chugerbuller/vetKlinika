@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <title>Прием у ветеринара</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
 </head>
 
 <body>
     <div class="page-container">
+
         <div class="header-bar">
             <button id="backBtn" class="btn btn-outline-secondary">← Назад к питомцу</button>
-            <h4 id="visitDate" class="visit-date">Загрузка даты...</h4>
+
+            <div class="header-actions">
+                <h4 id="visitDate" class="visit-date">Загрузка даты...</h4>
+                <button id="editVisitBtn" class="btn btn-outline-primary edit-visit-btn">
+                    ✎ Редактировать
+                </button>
+            </div>
         </div>
+
         <div class="top-section">
             <!-- Левый верхний угол: Инфо о животном -->
             <div class="pet-info-card">
@@ -56,6 +64,7 @@
                     <h6 class="card-title">Рекомендации</h6>
                     <div id="visitRecommendations" class="text-content"></div>
                 </div>
+
                 <div class="diagnosis-card">
                     <h6 class="card-title">Прикрепленные файлы (Анализы, УЗИ и т.д.)</h6>
                     <div id="visitFiles" class="files-container">
@@ -75,7 +84,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Модальное окно редактирования приема -->
+    <div id="editVisitModal" class="visit-modal hidden">
+        <div class="visit-window">
+            <h5 class="visit-window-title">Редактирование приема</h5>
+
+            <div class="mb-3">
+                <label for="editVisitDate" class="small text-muted mb-1">Дата приема</label>
+                <input id="editVisitDate" type="date" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="editVisitAnamnesis" class="small text-muted mb-1">Анамнез</label>
+                <textarea id="editVisitAnamnesis" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="editVisitDisease" class="small text-muted mb-1">Заболевание / Диагноз</label>
+                <textarea id="editVisitDisease" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="editVisitTreatment" class="small text-muted mb-1">Лечение</label>
+                <textarea id="editVisitTreatment" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="editVisitRecommendations" class="small text-muted mb-1">Рекомендации</label>
+                <textarea id="editVisitRecommendations" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="visit-window-buttons">
+                <button id="saveVisitBtn" class="btn btn-primary w-100">Сохранить</button>
+                <button id="closeVisitModalBtn" class="btn btn-light w-100">Отмена</button>
+            </div>
+        </div>
     </div>
+
     <script src="appointment.js"></script>
 </body>
 

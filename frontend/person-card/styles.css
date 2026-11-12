@@ -52,7 +52,7 @@ body{
     border: 1px solid #eee;
     cursor: pointer;
     transition: all 0.2s ease;
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -117,7 +117,7 @@ body{
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -271,4 +271,18 @@ body{
 #newTypeBlock input {
     border-left: 4px solid #007bff; /* Акцент на то, что это доп. поле */
     background: #f0f7ff;
+}
+.person-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.edit-person-btn {
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
 }

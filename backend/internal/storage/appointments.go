@@ -47,3 +47,33 @@ func (s *Storage) CreateAppointment(appointment *Appointment) (int, error) {
 	}
 	return int(lastId), nil
 }
+func (s *Storage) UpdateAppointment(appointment *Appointment) error {
+	query := `UPDATE appointments
+			SET pet_id = :petId,
+				date = :date,
+				anamnesis = :anamnesis,
+				disease = :disease,
+				treatment = :treatment,
+				recommendations = :recommendations
+			WHERE id = :id;`
+	result, err := s.db.Exec(query,
+		sql.Named("id", appointment.Id),
+		sql.Named("petId", appointment.PetId),
+		sql.Named("date", appointment.Date),
+		sql.Named("anamnesis", appointment.Anamnesis),
+		sql.Named("disease", appointment.Disease),
+		sql.Named("treatment", appointment.Treatment),
+		sql.Named("recommendations", appointment.Recommendations))
+	if err != nil {
+		return err
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows == 0 {
+		return sql.ErrNoRows // или своя ошибка, например ErrAppointmentNotFound
+	}
+	return nil
+}

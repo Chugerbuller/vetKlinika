@@ -1,12 +1,12 @@
 package server
 
 import (
-	"net"
-	"net/http"
-	"strings"
 	"vetklinika/backend/internal/handlers"
 	"vetklinika/backend/internal/middleware"
 	"vetklinika/backend/internal/storage"
+
+	"net"
+	"net/http"
 
 	"github.com/sirupsen/logrus"
 )
@@ -26,15 +26,14 @@ func NewServer(st *storage.Storage, logs *logrus.Logger) *Server {
 	s.initEndpoints()
 	return s
 }
+
 func (s *Server) initEndpoints() {
 	mw := middleware.NewMw(s.storage, s.logger)
-	//handlers.HandlePets
 	s.router.Handle("/api/pets", middleware.Chain(handlers.HandlePets, mw...))
 	s.router.Handle("/api/persons", middleware.Chain(handlers.HandlePersons, mw...))
 	s.router.Handle("/api/types", middleware.Chain(handlers.HandleTypes, mw...))
 	s.router.Handle("/api/appointments", middleware.Chain(handlers.HandleAppointments, mw...))
 	s.router.Handle("/api/documents", middleware.Chain(handlers.HandleDocuments, mw...))
-
 	serveStaticDir(s.router, "/person/create/", "./frontend/create-person")
 	serveStaticDir(s.router, "/person/", "./frontend/person-card")
 	serveStaticDir(s.router, "/pets/", "./frontend/pet-card")
@@ -42,30 +41,27 @@ func (s *Server) initEndpoints() {
 	serveStaticDir(s.router, "/visit/", "./frontend/appointment-card")
 
 	s.router.Handle("/", http.FileServer(http.Dir("./frontend/src")))
-
 }
 func (s *Server) Start(port string, ready chan<- struct{}) error {
-	// 1. Пытаемся открыть порт
 	l, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		return err
 	}
-
-	// 2. Порт успешно открыт!
-	// Закрываем канал, чтобы уведомить тех, кто ждет
 	if ready != nil {
 		close(ready)
 	}
-
-	// 3. Запускаем сервер на этом слушателе
-	// Это блокирующая операция, как и ListenAndServe
-	return http.Serve(l, s.router)
-}
-func serveStaticDir(mux *http.ServeMux, pathPrefix string, dirPath string) {
-	fs := http.FileServer(http.Dir(dirPath))
-	// Добавляем слеш в конец, если его нет, для корректной работы StripPrefix
-	if !strings.HasSuffix(pathPrefix, "/") {
-		pathPrefix += "/"
+	err = http.Serve(l, s.router)
+	if err == http.ErrServerClosed {
+		s.logger.WithError(err).Info("server gracefully closed")
+	} else if err != nil {
+		s.logger.WithError(err).Fatal("error running server")
 	}
-	mux.Handle(pathPrefix, http.StripPrefix(pathPrefix, fs))
+	return nil
+}
+func serveStaticDir(mux *http.ServeMux, pathPrefix, dirPath string) {
+	fs := http.StripPrefix(
+		pathPrefix,
+		http.FileServer(http.Dir(dirPath)),
+	)
+	mux.Handle(pathPrefix, fs)
 }

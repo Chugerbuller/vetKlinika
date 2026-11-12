@@ -50,8 +50,8 @@ func main() {
 	if err := server.Start(cfg.Port, ready); err != nil {
 		log.Fatalf("Server error: %v", err)
 	}
-
 }
+
 func openBrowser(url string) {
 	var err error
 
@@ -69,5 +69,6 @@ func openBrowser(url string) {
 
 	if err != nil {
 		log.Printf("Не удалось открыть браузер: %v", err)
+
 	}
 }
