@@ -1,3 +1,7 @@
+![vetKlinika](docs/cover.png)
+
+[![Tests](https://github.com/Chugerbuller/vetKlinika/actions/workflows/tests.yml/badge.svg)](https://github.com/Chugerbuller/vetKlinika/actions/workflows/tests.yml)
+
 # vetKlinika
 
 Веб-приложение для ветеринарной клиники: учёт клиентов, питомцев, приёмов и медицинских документов. Backend на Go с REST API и SQLite, фронтенд на HTML, JavaScript и Bootstrap.
